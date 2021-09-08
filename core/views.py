@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Restaurant, RestaurantCategory, Food
-from .serializers import OnlyRestaurantSerializer, OnlyRestaurantCategorySerializer, RestaurantSerializer
+from .models import Restaurant, RestaurantCategory, Food, FoodCategory
+from .serializers import OnlyRestaurantSerializer, OnlyRestaurantCategorySerializer, RestaurantSerializer, \
+    FoodSerializer, FoodCategorySerializer
 
 
 # Create your views here.
@@ -22,6 +23,20 @@ class RestaurantViews(generics.ListAPIView):
         return Restaurant.objects.all()
 
 
+class FoodCategoryViews(generics.ListAPIView):
+    serializer_class = FoodCategorySerializer
+
+    def get_queryset(self):
+        restaurant_id = self.kwargs['restaurant_id']
+        return FoodCategory.objects.filter(restaurant_id=restaurant_id)
+
+
 class FoodViews(generics.ListAPIView):
-    queryset = Food.objects.all()
-    serializer_class = ''
+    serializer_class = FoodSerializer
+
+    def get_queryset(self):
+        restaurant_id = self.kwargs.get('restaurant_id')
+        food_category_id = self.kwargs.get('food_category_id')
+        if food_category_id:
+            return Food.objects.filter(food_category=food_category_id)
+        return Food.objects.filter(food_category__restaurant__id=restaurant_id)
