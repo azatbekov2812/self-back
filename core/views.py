@@ -1,7 +1,11 @@
-from django.shortcuts import render
 from rest_framework import generics
 from .models import Restaurant, RestaurantCategory, Food, FoodCategory
-from .serializers import OnlyRestaurantSerializer, OnlyRestaurantCategorySerializer, RestaurantSerializer, \
+from .serializers import OnlyRestaurantCategorySerializer, RestaurantSerializer, \
+    FoodSerializer, FoodCategorySerializer
+from rest_framework import generics
+
+from .models import Restaurant, RestaurantCategory, Food, FoodCategory
+from .serializers import OnlyRestaurantCategorySerializer, RestaurantSerializer, \
     FoodSerializer, FoodCategorySerializer
 
 
