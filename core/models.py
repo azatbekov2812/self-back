@@ -35,3 +35,9 @@ class Food(models.Model):
 
     def __str__(self):
         return str(self.food_category) + ' -- ' + self.name
+
+
+class Sale(models.Model):
+    name = models.CharField(max_length=255)
+    avatar = models.ImageField(max_length=255, blank=True, null=True)
+    discount = models.IntegerField(default=0)

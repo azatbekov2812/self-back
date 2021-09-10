@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Restaurant, RestaurantCategory, Food, FoodCategory
+from .models import *
 
 
 class OnlyRestaurantCategorySerializer(serializers.ModelSerializer):
@@ -33,4 +33,10 @@ class FoodCategorySerializer(serializers.ModelSerializer):
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
+        fields = '__all__'
+
+
+class SaleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sale
         fields = '__all__'

@@ -4,15 +4,17 @@ from .serializers import OnlyRestaurantCategorySerializer, RestaurantSerializer,
     FoodSerializer, FoodCategorySerializer
 from rest_framework import generics
 
-from .models import Restaurant, RestaurantCategory, Food, FoodCategory
-from .serializers import OnlyRestaurantCategorySerializer, RestaurantSerializer, \
-    FoodSerializer, FoodCategorySerializer
+from .models import *
+from .serializers import *
 
 
 # Create your views here.
+class SaleViews(generics.ListAPIView):
+    queryset = Sale.objects.all()
+    serializer_class = SaleSerializer
 
 
-class RestaurantCategoryViews(generics.ListCreateAPIView):
+class RestaurantCategoryViews(generics.ListAPIView):
     queryset = RestaurantCategory.objects.all()
     serializer_class = OnlyRestaurantCategorySerializer
 
