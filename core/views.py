@@ -25,7 +25,7 @@ class RestaurantViews(generics.ListAPIView):
     def get_queryset(self):
         category_id = self.request.query_params.get('category_id')
         if category_id:
-            return Restaurant.objects.filter(category__in=category_id)
+            return Restaurant.objects.filter(restaurant_category=category_id)
         return Restaurant.objects.all()
 
 
@@ -34,7 +34,7 @@ class FoodCategoryViews(generics.ListAPIView):
 
     def get_queryset(self):
         restaurant_id = self.kwargs['restaurant_id']
-        return FoodCategory.objects.filter(restaurant_id=restaurant_id)
+        return FoodCategory.objects.filter(restaurants=restaurant_id)
 
 
 class FoodViews(generics.ListAPIView):
@@ -44,5 +44,5 @@ class FoodViews(generics.ListAPIView):
         restaurant_id = self.kwargs.get('restaurant_id')
         food_category_id = self.kwargs.get('food_category_id')
         if food_category_id:
-            return Food.objects.filter(food_category=food_category_id)
-        return Food.objects.filter(food_category__restaurant__id=restaurant_id)
+            return Food.objects.filter(restaurant=restaurant_id, food_category=food_category_id)
+        return Food.objects.filter(restaurant=restaurant_id)

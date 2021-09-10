@@ -14,7 +14,8 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255, blank=True, null=True)
     avatar = models.ImageField(max_length=255, blank=True, null=True)
-    category = models.ManyToManyField(RestaurantCategory, blank=True, null=True)
+    restaurant_category = models.ManyToManyField(RestaurantCategory, blank=True, null=True)
+    food_category = models.ManyToManyField('FoodCategory', blank=True, null=True, related_name='restaurants')
 
     def __str__(self):
         return self.name
@@ -22,15 +23,14 @@ class Restaurant(models.Model):
 
 class FoodCategory(models.Model):
     name = models.CharField(max_length=255)
-    # restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='food_categories')
-    restaurant = models.ManyToManyField(Restaurant, related_name='food_categories')
 
     def __str__(self):
-        return str(self.restaurant) + ' -- ' + self.name
+        return self.name
 
 
 class Food(models.Model):
-    food_category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, related_name='foods')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='restaurant_foods')
+    food_category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, related_name='category_foods')
     name = models.CharField(max_length=255)
     avatar = models.ImageField(max_length=255, blank=True, null=True)
 
