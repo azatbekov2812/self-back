@@ -32,6 +32,8 @@ class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='restaurant_foods')
     food_category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, related_name='category_foods')
     name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, default='')
+    price = models.IntegerField(default=0)
     avatar = models.ImageField(upload_to='pictures/foods/', max_length=255, blank=True, null=True)
 
     def __str__(self):
