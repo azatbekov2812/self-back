@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 # Create your views here.
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
@@ -42,3 +42,8 @@ class CustomObtainJwtIin(ObtainJSONWebToken):
             # send_mail('error: ecp', str(e) + '------' + str(request.data), settings.EMAIL_HOST_USER,
             #          [settings.EMAIL_HOST_USER])
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSet(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
