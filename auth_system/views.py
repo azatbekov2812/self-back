@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 # Create your views here.
 from rest_framework import status, generics
+from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import ObtainJSONWebToken
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ProfileSerializer
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -47,3 +48,18 @@ class CustomObtainJwtIin(ObtainJSONWebToken):
 class UserViewSet(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+@api_view(['GET', 'POST'])
+def user_profile(request, pk):
+    user = User.objects.get(pk=pk)
+    if request.method == 'GET':
+        data = UserSerializer(user).data
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        profile = user.profile
+        full_name = request.data.get('full_name')
+        if full_name:
+            profile.full_name = full_name
+            profile.save()
+        return Response({'update full name': full_name}, status=status.HTTP_200_OK)
