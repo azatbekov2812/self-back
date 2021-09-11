@@ -1,9 +1,11 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.decorators import api_view
+
 from .models import Restaurant, RestaurantCategory, Food, FoodCategory
 from .serializers import OnlyRestaurantCategorySerializer, RestaurantSerializer, \
     FoodSerializer, FoodCategorySerializer
 from rest_framework import generics
-
+from rest_framework.response import Response
 from .models import *
 from .serializers import *
 
@@ -46,3 +48,10 @@ class FoodViews(generics.ListAPIView):
         if food_category_id:
             return Food.objects.filter(restaurant=restaurant_id, food_category=food_category_id)
         return Food.objects.filter(restaurant=restaurant_id)
+
+
+@api_view(['GET'])
+def food_detail(request, pk):
+    food = Food.objects.get(pk=pk)
+    data = FoodSerializer(food).data
+    return Response(data, status=status.HTTP_200_OK)

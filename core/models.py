@@ -34,6 +34,8 @@ class Food(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255, default='')
     price = models.IntegerField(default=0)
+    calories = models.FloatField(default=0.0)
+    weight = models.FloatField(default=0.0)
     avatar = models.ImageField(upload_to='pictures/foods/', max_length=255, blank=True, null=True)
 
     def __str__(self):

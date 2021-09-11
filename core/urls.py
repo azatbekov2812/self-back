@@ -12,4 +12,5 @@ urlpatterns = [
          name='restaurants'),  # all foods one category
     path('restaurants/<int:restaurant_id>/food-categories/<int:food_category_id>/', FoodViews.as_view(),
          name='foods_one_categories'),  # all foods one category
+    path('restaurants/food/<int:pk>/', food_detail, name='food_detail')
 ]
