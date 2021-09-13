@@ -31,6 +31,17 @@ class RestaurantViews(generics.ListAPIView):
         return Restaurant.objects.all()
 
 
+class RestaurantDetailViews(generics.RetrieveAPIView):
+    serializer_class = RestaurantSerializer
+    queryset = Restaurant.objects.all()
+
+    # def get_queryset(self):
+    #     category_id = self.request.query_params.get('category_id')
+    #     if category_id:
+    #         return Restaurant.objects.filter(restaurant_category=category_id)
+    #     return Restaurant.objects.all()
+
+
 class FoodCategoryViews(generics.ListAPIView):
     serializer_class = FoodCategorySerializer
 
