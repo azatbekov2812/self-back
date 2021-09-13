@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -23,3 +24,4 @@ class Order(models.Model):
     payment_type = models.CharField(max_length=255, default='', blank=True)
     peopleCount = models.CharField(max_length=255, default='', blank=True)
     orderComment = models.CharField(max_length=255, default='', blank=True)
+    products = ArrayField(models.IntegerField(), default=[])

@@ -7,4 +7,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
-        extra_kwargs = {'creator': {'required': True}}
+        extra_kwargs = {
+            'creator': {'required': True},
+            'products': {'required': True},
+        }
