@@ -12,7 +12,7 @@ class Reservation(models.Model):
 
 
 class Order(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     streetName = models.CharField(max_length=255, default='', blank=True)
     streetHouse = models.CharField(max_length=255, default='', blank=True)
     apartmentOrOffice = models.CharField(max_length=255, default='', blank=True)
