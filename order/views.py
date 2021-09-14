@@ -2,12 +2,17 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from .models import *
 from .serializers import *
+from rest_framework import permissions
 
 
 # Create your views here.
 class OrderView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Order.objects.filter(creator=user)
 
 
 class OrderDetailView(generics.RetrieveAPIView):
@@ -16,8 +21,12 @@ class OrderDetailView(generics.RetrieveAPIView):
 
 
 class BookView(generics.ListCreateAPIView):
-    queryset = Booking.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BookingSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Booking.objects.filter(creator=user)
 
 
 class BookDetailView(generics.RetrieveAPIView):
