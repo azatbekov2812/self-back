@@ -9,6 +9,7 @@ from rest_framework import permissions
 class OrderView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
+    # queryset = Order.objects.all()
 
     def get_queryset(self):
         user = self.request.user
@@ -23,6 +24,7 @@ class OrderDetailView(generics.RetrieveAPIView):
 class BookView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = BookingSerializer
+    # queryset = Booking.objects.all()
 
     def get_queryset(self):
         user = self.request.user

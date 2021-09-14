@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 from django.template.defaulttags import now
 
-from core.models import Restaurant
+from core.models import Restaurant, Food
 
 User = get_user_model()
 
@@ -30,6 +30,10 @@ class Order(models.Model):
     products = ArrayField(models.IntegerField(), default=[])
     create_date = models.DateTimeField(auto_now_add=True, null=True)
 
+    @property
+    def get_products(self):
+        return Food.objects.filter(id__in=self.products)
+
     class Meta:
         ordering = ('-create_date',)
 
@@ -46,6 +50,10 @@ class Booking(models.Model):
     bookComment = models.CharField(max_length=255, default='', blank=True, null=True)
     products = ArrayField(models.IntegerField(), default=[])
     create_date = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_products(self):
+        return Food.objects.filter(id__in=self.products)
 
     class Meta:
         ordering = ('-create_date',)
