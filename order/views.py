@@ -20,6 +20,6 @@ class BookView(generics.ListCreateAPIView):
     serializer_class = BookingSerializer
 
 
-class BookDetailView(generics.ListCreateAPIView):
+class BookDetailView(generics.RetrieveAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
